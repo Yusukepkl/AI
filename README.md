@@ -20,6 +20,8 @@ Este repositório reúne diversos módulos que juntos implementam a **Lia**, uma
 
 ## Instalação
 
+### Linux/WSL
+
 Antes de instalar as dependências Python, é necessário obter as bibliotecas nativas usadas por
 `pyaudio` e `simpleaudio`:
 
@@ -35,6 +37,11 @@ pip install -r requirements.txt
 
 Se preferir, execute `./setup.sh` para instalar automaticamente as dependências
 nativas e os pacotes Python.
+
+### Windows
+
+Consulte o guia [WINDOWS_INSTALL.md](WINDOWS_INSTALL.md) para um passo a passo
+completo da instalação no sistema da Microsoft.
 
 ## Configuração
 
