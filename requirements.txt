@@ -19,7 +19,6 @@ googletrans
 sqlalchemy
 pyyaml>=6.0.2           # Forçar versão com wheel
 requests
-rasa
 
 # Mensageria
 kafka-python
