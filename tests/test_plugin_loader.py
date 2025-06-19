@@ -2,6 +2,7 @@ import os
 import tempfile
 import types
 import sys
+# ruff: noqa: E402
 
 # Stub opentelemetry dependency used in logger
 opentelemetry = types.ModuleType("opentelemetry")

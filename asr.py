@@ -1,7 +1,8 @@
 # -- asr.py
 import os
 from vosk import Model, KaldiRecognizer
-import json, numpy as np
+import json
+import numpy as np
 from config import config
 from logger import logger
 
