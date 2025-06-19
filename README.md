@@ -20,21 +20,28 @@ Este repositório reúne diversos módulos que juntos implementam a **Lia**, uma
 
 ## Instalação
 
-Antes de instalar as dependências Python, é necessário obter as bibliotecas nativas usadas por
-`pyaudio` e `simpleaudio`:
+Siga a ordem abaixo para preparar o ambiente e rodar a assistente:
 
 ```bash
-sudo apt-get install portaudio19-dev libasound2-dev
-```
+# Dependências do sistema
+sudo apt-get update
+sudo apt-get install -y python3.11 python3.11-venv \
+    portaudio19-dev libasound2-dev
 
-Em seguida, instale os pacotes do projeto com:
+# Ambiente virtual (opcional, mas recomendado)
+python3.11 -m venv venv
+source venv/bin/activate
 
-```bash
+# Pacotes Python
 pip install -r requirements.txt
-```
+# ou simplesmente execute ./setup.sh para automatizar as etapas acima
 
-Se preferir, execute `./setup.sh` para instalar automaticamente as dependências
-nativas e os pacotes Python.
+# (opcional) rode os testes
+pytest -q
+
+# Inicie a interface
+python main_ui.py
+```
 
 ## Configuração
 
