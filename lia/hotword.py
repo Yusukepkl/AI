@@ -43,8 +43,8 @@ if not ACCESS_KEY:
 if KEYWORD_PATH:
     porcupine = Porcupine(
         access_key=ACCESS_KEY,
-        library_path=LIBRARY_PATH,
-        model_path=MODEL_PATH,
+        library_path=LIBRARY_PATH or None,
+        model_path=MODEL_PATH or None,
         keyword_paths=[KEYWORD_PATH],
         sensitivities=SENSITIVITIES,
     )

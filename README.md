@@ -56,6 +56,9 @@ pv_sensitivity: 0.5
 Para usar a detecção de hot-word Porcupine, obtenha uma chave gratuita em
 [console.picovoice.ai](https://console.picovoice.ai/) e defina `pv_access_key`
 no `config.yaml` ou a variável de ambiente `PV_ACCESS_KEY`.
+Se desejar um modelo de palavra-chave personalizado, informe o caminho do
+arquivo `.ppn` em `pv_keyword_path` (ou use a variável `PV_KEYWORD_PATH`).
+Caso nenhum caminho seja fornecido, o modelo padrão "porcupine" será usado.
 
 ## Estrutura
 
