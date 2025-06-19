@@ -36,6 +36,7 @@ class Config:
         self.PV_LIBRARY_PATH  = os.getenv('PV_LIBRARY_PATH', data.get('pv_library_path', ''))
         self.PV_MODEL_PATH    = os.getenv('PV_MODEL_PATH', data.get('pv_model_path', ''))
         self.PV_KEYWORD_PATH  = os.getenv('PV_KEYWORD_PATH', data.get('pv_keyword_path', ''))
+        self.PV_SENSITIVITY   = float(os.getenv('PV_SENSITIVITY', data.get('pv_sensitivity', 0.5)))
 
 # instantiate
 config = Config()

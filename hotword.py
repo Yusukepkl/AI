@@ -28,7 +28,7 @@ ACCESS_KEY    = os.getenv('PV_ACCESS_KEY', config.PV_ACCESS_KEY)
 LIBRARY_PATH  = os.getenv('PV_LIBRARY_PATH', config.PV_LIBRARY_PATH)
 MODEL_PATH    = os.getenv('PV_MODEL_PATH', config.PV_MODEL_PATH)
 KEYWORD_PATH  = os.getenv('PV_KEYWORD_PATH', config.PV_KEYWORD_PATH)
-SENSITIVITIES = config.LANGUAGES if hasattr(config, 'LANGUAGES') else [0.5]
+SENSITIVITIES = [float(os.getenv('PV_SENSITIVITY', config.PV_SENSITIVITY))]
 
 if not KEYWORD_PATH:
     raise ValueError(
