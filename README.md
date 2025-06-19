@@ -59,6 +59,14 @@ no `config.yaml` ou a variável de ambiente `PV_ACCESS_KEY`.
 Se desejar um modelo de palavra-chave personalizado, informe o caminho do
 arquivo `.ppn` em `pv_keyword_path` (ou use a variável `PV_KEYWORD_PATH`).
 Caso nenhum caminho seja fornecido, o modelo padrão "porcupine" será usado.
+Se as bibliotecas do Porcupine estiverem fora do caminho padrão, defina também:
+```bash
+export PV_LIBRARY_PATH=/caminho/para/libpv_porcupine.so
+export PV_MODEL_PATH=/caminho/para/porcupine_params.pv
+export PV_SENSITIVITY=0.5
+```
+Esses valores podem ser configurados em `config.yaml`.
+
 
 ## Estrutura
 
