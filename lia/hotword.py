@@ -1,9 +1,9 @@
 # hot-word.py
 import os
 import pyaudio
-from vad import init_vad, vad_collector
-from config import config
-from logger import logger
+from lia.vad import init_vad, vad_collector
+from lia.config import config
+from lia.logger import logger
 import simpleaudio as sa
 import numpy as np
 

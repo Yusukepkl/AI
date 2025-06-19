@@ -1,30 +1,30 @@
-# Lia AI Assistant
+# Assistente Lia
 
-This repository contains a collection of modules that together implement a simple AI assistant called **Lia**.  The project mixes speech recognition, hotword detection, natural language understanding and a Qt based user interface.
+Este repositório reúne diversos módulos que juntos implementam a **Lia**, uma assistente virtual simples. O projeto combina reconhecimento de fala, detecção de palavra-chave, entendimento de linguagem natural e uma interface gráfica em Qt.
 
-## Requirements
+## Requisitos
 
-Python 3.11 is recommended.  The dependencies can be installed with:
+- Python 3.11
+- Dependências listadas em `requirements.txt`
+- Bibliotecas nativas para `pyaudio` e `simpleaudio`:
+  ```bash
+  sudo apt-get install portaudio19-dev libasound2-dev
+  ```
+
+## Instalação
+
+Instale os pacotes do projeto com:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Both `pyaudio` and `simpleaudio` require native libraries. On Debian/Ubuntu you
-can install the necessary headers with:
+## Configuração
 
-```bash
-sudo apt-get install portaudio19-dev libasound2-dev
-```
-
-Some optional packages such as `rasa` are not available for Python 3.11.  The basic features work without them.
-
-## Configuration
-
-All runtime options are read from `config.yaml`.  A sample configuration is provided below:
+Todas as opções de execução são lidas de `config.yaml`. Um exemplo é mostrado abaixo:
 
 ```yaml
-openai_api_key: "YOUR-OPENAI-KEY"
+openai_api_key: "SUA-CHAVE-OPENAI"
 vad_mode: 1
 kafka_broker: "localhost:9092"
 db_url: "sqlite:///lia_context.db"
@@ -38,13 +38,17 @@ whisper_model: "small"
 rasa_url: "http://localhost:5005/model/parse"
 ```
 
-## Running
+## Estrutura
 
-1. Ensure a Vosk model is placed inside `models/vosk-model-small`.
-2. Run the Qt interface:
+Os módulos principais estão dentro do pacote `lia/` e incluem componentes de ASR, NLU, TTS, gestão de contexto, entre outros. Plugins personalizados podem ser adicionados em `lia/plugins`.
+
+## Execução
+
+1. Coloque um modelo do Vosk em `models/vosk-model-small`.
+2. Inicie a interface Qt:
 
 ```bash
 python main_ui.py
 ```
 
-The assistant window will open and start listening for the hotword defined via Porcupine.
+A janela da assistente será aberta e começará a escutar a palavra-chave configurada.

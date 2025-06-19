@@ -1,4 +1,4 @@
-from logger import logger
+from lia.logger import logger
 
 
 def feedback(user_id: str, rating: int, comment: str):

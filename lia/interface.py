@@ -14,7 +14,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont
-from robotface import RobotFace  # Classe de rosto animado
+from lia.robotface import RobotFace  # Classe de rosto animado
 
 
 class MainWindow(QMainWindow):
