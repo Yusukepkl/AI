@@ -36,7 +36,16 @@ mqtt_broker: "localhost"
 vosk_model_path: "models/vosk-model-small"
 whisper_model: "small"
 rasa_url: "http://localhost:5005/model/parse"
+pv_access_key: "SUA-CHAVE-PORCUPINE"
+pv_library_path: ""
+pv_model_path: ""
+pv_keyword_path: ""
+pv_sensitivity: 0.5
 ```
+
+Para usar a detecção de hot-word Porcupine, obtenha uma chave gratuita em
+[console.picovoice.ai](https://console.picovoice.ai/) e defina `pv_access_key`
+no `config.yaml` ou a variável de ambiente `PV_ACCESS_KEY`.
 
 ## Estrutura
 
