@@ -2,6 +2,7 @@ import os
 import importlib.util
 from logger import logger
 
+
 def load_plugins(plugin_folder: str):
     """
     Carrega dinamicamente todos os módulos de plugin do diretório especificado.
@@ -15,7 +16,7 @@ def load_plugins(plugin_folder: str):
         return plugins
 
     for filename in os.listdir(plugin_folder):
-        if filename.endswith('.py') and not filename.startswith('__'):
+        if filename.endswith(".py") and not filename.startswith("__"):
             module_name = filename[:-3]
             module_path = os.path.join(plugin_folder, filename)
             spec = importlib.util.spec_from_file_location(module_name, module_path)
@@ -23,7 +24,7 @@ def load_plugins(plugin_folder: str):
             try:
                 spec.loader.exec_module(module)
                 # Verifica se o plugin tem os atributos esperados
-                if hasattr(module, 'name') and hasattr(module, 'handle'):
+                if hasattr(module, "name") and hasattr(module, "handle"):
                     plugins.append(module)
                     logger.info(f"Plugin '{module.name}' carregado.")
                 else:

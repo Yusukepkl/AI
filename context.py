@@ -9,28 +9,32 @@ import openai
 openai.api_key = config.OPENAI_API_KEY
 
 # Banco de dados de contexto
-engine = create_engine(config.DB_URL, connect_args={'check_same_thread': False})
+engine = create_engine(config.DB_URL, connect_args={"check_same_thread": False})
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 
+
 class History(Base):
-    __tablename__ = 'history'
+    __tablename__ = "history"
     id = Column(Integer, primary_key=True)
     role = Column(String)
     content = Column(Text)
     created = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
+
 class Memory(Base):
-    __tablename__ = 'memories'
+    __tablename__ = "memories"
     id = Column(Integer, primary_key=True)
     title = Column(String)
     content = Column(Text)
     created = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
+
 # Cria tabelas
 Base.metadata.create_all(engine)
 
 # Funções de contexto
+
 
 def save_message(role, content):
     """Salva uma mensagem no histórico."""
@@ -72,10 +76,9 @@ def summarize_history():
     hist = get_history(40)
     if len(hist) <= 20:
         return None
-    prompt = ' '.join([f"{r}:{c}" for r, c in hist[:-20]])
+    prompt = " ".join([f"{r}:{c}" for r, c in hist[:-20]])
     resp = openai.ChatCompletion.create(
-        model='gpt-4o-mini',
-        messages=[{'role': 'system', 'content': 'Resuma: ' + prompt}]
+        model="gpt-4o-mini", messages=[{"role": "system", "content": "Resuma: " + prompt}]
     )
     summary = resp.choices[0].message.content
     s = Session()
@@ -83,8 +86,7 @@ def summarize_history():
     s.commit()
     for r, c in hist[-20:]:
         s.add(History(role=r, content=c))
-    s.add(History(role='system', content=summary))
+    s.add(History(role="system", content=summary))
     s.commit()
     s.close()
     return summary
-

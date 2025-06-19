@@ -4,11 +4,12 @@ from PySide6.QtGui import QPainter, QColor, QBrush, QCursor
 from PySide6.QtCore import QTimer, QRectF, Qt
 import math
 
+
 class RobotFace(QWidget):
     def __init__(self):
         super().__init__()
         self.resize(400, 400)
-        self.state, self.emotion = 'idle', 'neutral'
+        self.state, self.emotion = "idle", "neutral"
         self.blink = False
         self.breath = 0.0
 
@@ -40,7 +41,7 @@ class RobotFace(QWidget):
     def _update_breath(self):
         self.breath = (self.breath + 0.1) % (math.pi * 2)
 
-    def animate(self, state, emotion='neutral'):
+    def animate(self, state, emotion="neutral"):
         """
         Atualiza o estado e emoção para animações.
         """
@@ -59,20 +60,20 @@ class RobotFace(QWidget):
         fx, fy = (w - fw) / 2, (h - fh) / 2
 
         # Cor depende de estado e emoção
-        base = QColor(50, 150, 200) if self.state == 'idle' else QColor(80, 200, 150)
-        if self.emotion == 'happy':
+        base = QColor(50, 150, 200) if self.state == "idle" else QColor(80, 200, 150)
+        if self.emotion == "happy":
             fc = base.lighter(130)
-        elif self.emotion == 'thinking':
+        elif self.emotion == "thinking":
             fc = base.darker(130)
-        elif self.emotion == 'excited':
+        elif self.emotion == "excited":
             fc = QColor(255, 180, 100)
-        elif self.emotion == 'grateful':
+        elif self.emotion == "grateful":
             fc = QColor(200, 200, 100)
-        elif self.emotion == 'sad':
+        elif self.emotion == "sad":
             fc = QColor(100, 100, 200)
-        elif self.emotion == 'sorry':
+        elif self.emotion == "sorry":
             fc = QColor(200, 100, 100)
-        elif self.emotion == 'curious':
+        elif self.emotion == "curious":
             fc = QColor(150, 100, 200)
         else:
             fc = base
@@ -82,7 +83,7 @@ class RobotFace(QWidget):
 
         # Boca (fala ou neutra)
         mw = fw * 0.3
-        mh = fh * 0.07 if self.state == 'speaking' else fh * 0.03
+        mh = fh * 0.07 if self.state == "speaking" else fh * 0.03
         mx, my = fx + (fw - mw) / 2, fy + fh * 0.65
         painter.setBrush(QBrush(QColor(255, 80, 80)))
         painter.drawRoundedRect(QRectF(int(mx), int(my), int(mw), int(mh)), 10, 10)

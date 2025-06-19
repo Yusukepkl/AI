@@ -1,17 +1,26 @@
 # interface.py
 import threading
 from PySide6.QtWidgets import (
-    QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QListWidget,
-    QTextEdit, QLineEdit, QPushButton, QLabel, QSplitter
+    QMainWindow,
+    QWidget,
+    QVBoxLayout,
+    QHBoxLayout,
+    QListWidget,
+    QTextEdit,
+    QLineEdit,
+    QPushButton,
+    QLabel,
+    QSplitter,
 )
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont
 from robotface import RobotFace  # Classe de rosto animado
 
+
 class MainWindow(QMainWindow):
     def __init__(self, send_callback):
         super().__init__()
-        self.setWindowTitle('Lia Virtual Assistant')
+        self.setWindowTitle("Lia Virtual Assistant")
         self.resize(1200, 800)
 
         # Divisor principal (horizontal)
@@ -20,7 +29,7 @@ class MainWindow(QMainWindow):
         # --- Sidebar de plugins e status
         side = QWidget()
         sl = QVBoxLayout()
-        sl.addWidget(QLabel('Plugins e Status'))
+        sl.addWidget(QLabel("Plugins e Status"))
         self.plist = QListWidget()
         sl.addWidget(self.plist)
         side.setLayout(sl)
@@ -39,8 +48,8 @@ class MainWindow(QMainWindow):
         # Barra de input
         hb = QHBoxLayout()
         self.input = QLineEdit()
-        self.input.setFont(QFont('Arial', 14))
-        self.btn = QPushButton('Enviar')
+        self.input.setFont(QFont("Arial", 14))
+        self.btn = QPushButton("Enviar")
         hb.addWidget(self.input)
         hb.addWidget(self.btn)
         cl.addLayout(hb)
@@ -50,7 +59,7 @@ class MainWindow(QMainWindow):
         # --- Painel de logs
         logw = QWidget()
         ll = QVBoxLayout()
-        ll.addWidget(QLabel('Logs'))
+        ll.addWidget(QLabel("Logs"))
         self.log = QTextEdit()
         self.log.setReadOnly(True)
         ll.addWidget(self.log)
@@ -71,7 +80,7 @@ class MainWindow(QMainWindow):
         text = self.input.text().strip()
         if not text:
             return
-        self.chat.append(f'<b>Você:</b> {text}')
+        self.chat.append(f"<b>Você:</b> {text}")
         self.input.clear()
         threading.Thread(target=callback, args=(text,), daemon=True).start()
 
@@ -79,9 +88,9 @@ class MainWindow(QMainWindow):
         """
         Insere no chat a resposta da Lia e anima o rosto.
         """
-        self.face.animate('speaking', 'happy')
-        self.chat.append(f'<b>Lia:</b> {text}')
-        self.face.animate('idle', 'neutral')
+        self.face.animate("speaking", "happy")
+        self.chat.append(f"<b>Lia:</b> {text}")
+        self.face.animate("idle", "neutral")
 
     def append_log(self, text):
         """

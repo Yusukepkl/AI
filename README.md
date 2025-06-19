@@ -10,6 +10,13 @@ Python 3.11 is recommended.  The dependencies can be installed with:
 pip install -r requirements.txt
 ```
 
+Both `pyaudio` and `simpleaudio` require native libraries. On Debian/Ubuntu you
+can install the necessary headers with:
+
+```bash
+sudo apt-get install portaudio19-dev libasound2-dev
+```
+
 Some optional packages such as `rasa` are not available for Python 3.11.  The basic features work without them.
 
 ## Configuration

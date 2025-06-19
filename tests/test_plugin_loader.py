@@ -2,6 +2,7 @@ import os
 import tempfile
 import types
 import sys
+
 # ruff: noqa: E402
 
 # Stub opentelemetry dependency used in logger
@@ -34,4 +35,4 @@ def handle(text: str):\n    return 'ok'\n"""
         plugins = load_plugins(plugin_dir)
 
         assert len(plugins) == 1
-        assert plugins[0].name == 'valid'
+        assert plugins[0].name == "valid"

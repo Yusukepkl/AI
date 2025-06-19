@@ -3,7 +3,8 @@ from googletrans import Translator
 
 translator = Translator()
 
-def translate(text: str, dest: str = 'en') -> str:
+
+def translate(text: str, dest: str = "en") -> str:
     """
     Detecta o idioma de `text` e, se for diferente de `dest`, faz a tradução.
     """
