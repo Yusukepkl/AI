@@ -26,11 +26,18 @@ def play_beep():
 
 
 # Carrel parametrise do Porcupine via config.yaml ou variates de ambient
+# Carrega parâmetros do Porcupine via config.yaml ou variáveis de ambiente
 ACCESS_KEY = os.getenv("PV_ACCESS_KEY", config.PV_ACCESS_KEY)
 LIBRARY_PATH = os.getenv("PV_LIBRARY_PATH", config.PV_LIBRARY_PATH)
 MODEL_PATH = os.getenv("PV_MODEL_PATH", config.PV_MODEL_PATH)
 KEYWORD_PATH = os.getenv("PV_KEYWORD_PATH", config.PV_KEYWORD_PATH)
 SENSITIVITIES = [float(os.getenv("PV_SENSITIVITY", config.PV_SENSITIVITY))]
+
+if not ACCESS_KEY:
+    raise RuntimeError(
+        "PV_ACCESS_KEY n\u00e3o definido. Obtenha uma chave em https://console.picovoice.ai/ "
+        "e configure a vari\u00e1vel de ambiente ou 'pv_access_key' em config.yaml."
+    )
 # Instancia o detector de hot-word. Caso KEYWORD_PATH não esteja
 # definido, utiliza o modelo padrão "porcupine" embutido na biblioteca.
 if KEYWORD_PATH:

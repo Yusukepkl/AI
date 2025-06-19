@@ -13,3 +13,8 @@ mqtt_broker: "localhost"
 vosk_model_path: "models/vosk-model-small"
 whisper_model: "small"
 rasa_url: "http://localhost:5005/model/parse"
+pv_access_key: ""
+pv_library_path: ""
+pv_model_path: ""
+pv_keyword_path: ""
+pv_sensitivity: 0.5
