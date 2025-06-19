@@ -40,20 +40,8 @@ nativas e os pacotes Python.
 
 ### Windows
 
-1. Instale o [Python 3.11](https://www.python.org/downloads/windows/).
-2. Abra o **Prompt de Comando** e instale o utilitário `pipwin`:
-
-   ```cmd
-   pip install pipwin
-   pipwin install pyaudio
-   pip install simpleaudio
-   ```
-
-3. Por fim, instale as demais dependências do projeto:
-
-   ```cmd
-   pip install -r requirements.txt
-   ```
+Consulte o guia [WINDOWS_INSTALL.md](WINDOWS_INSTALL.md) para um passo a passo
+completo da instalação no sistema da Microsoft.
 
 ## Configuração
 
