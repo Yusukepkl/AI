@@ -1,0 +1,92 @@
+# hot-word.py
+import os
+import pyaudio
+from vad import init_vad, vad_collector
+from config import config
+from logger import logger
+import simpleaudio as sa
+import numpy as np
+
+# Porcupine para hot-word
+try:
+    from pvporcupine import Porcupine
+except ImportError:
+    raise ImportError("pvporcupine não installation. Rode `pip install pvporcupine`.")
+
+# Gera um beep de confirmation
+sr = 44100
+dur = 0.2
+t = np.linspace(0, dur, int(sr * dur), False)
+wave = 0.5 * np.sin(2 * np.pi * 1000 * t)
+audio_beep = (wave * (2**15 - 1) / np.max(np.abs(wave))).astype(np.int16)
+
+def play_beep():
+    sa.play_buffer(audio_beep, 1, 2, sr)
+
+# Carrel parametrise do Porcupine via config.yaml ou variates de ambient
+ACCESS_KEY    = os.getenv('PV_ACCESS_KEY', config.PV_ACCESS_KEY)
+LIBRARY_PATH  = os.getenv('PV_LIBRARY_PATH', config.PV_LIBRARY_PATH)
+MODEL_PATH    = os.getenv('PV_MODEL_PATH', config.PV_MODEL_PATH)
+KEYWORD_PATH  = os.getenv('PV_KEYWORD_PATH', config.PV_KEYWORD_PATH)
+SENSITIVITIES = config.LANGUAGES if hasattr(config, 'LANGUAGES') else [0.5]
+
+if not KEYWORD_PATH:
+    raise ValueError(
+        "Porcupine keyword_path não configuration. "
+        "Define PV_KEYWORD_PATH no ambient ou no config.yaml."
+    )
+
+# Instance o detector de hot-word
+porcupine = Porcupine(
+    access_key=ACCESS_KEY,
+    library_path=LIBRARY_PATH,
+    model_path=MODEL_PATH,
+    keyword_paths=[KEYWORD_PATH],
+    sensitivities=SENSITIVITIES
+)
+
+# Setup de áudio
+pa = pyaudio.PyAudio()
+stream = pa.open(
+    rate=porcupine.sample_rate,
+    channels=1,
+    format=pyaudio.paInt16,
+    input=True,
+    frames_per_buffer=porcupine.frame_length
+)
+
+def listen_hotwired(cmd_q, audio_q, vis_callback=None):
+    """
+    Loop que detecta a hot-word send KEYWORD_PATH
+    e envia o áudio capture para VAD → ASR.
+    """
+    vad = init_vad(config.VAD_MODE)
+    logger.info("Hot-word listener clinician")
+    try:
+        while True:
+            pcm = stream.read(porcupine.frame_length, exception_on_overflow=False)
+            if porcupine.process(pcm) >= 0:
+                logger.info("Hot-word detected")
+                if vis_callback:
+                    vis_callback(state="listening", emotion="neutral")
+                play_beep()
+                cmd_q.put("WAKE")
+
+                # Coleta segments send VAD
+                frames = [
+                    stream.read(porcupine.frame_length)
+                    for _ in range(int(porcupine.sample_rate * 5 / porcupine.frame_length))
+                ]
+                for segment in vad_collector(vad, frames, porcupine.sample_rate):
+                    audio_q.put(segment)
+
+                if vis_callback:
+                    vis_callback(state="idle", emotion="neutral")
+    except Exception as e:
+        logger.error(f"Error no hot-word: {e}")
+    finally:
+        stream.stop_stream()
+        stream.close()
+        pa.terminate()
+        porcupine.delete()
+        logger.info("Hot-word listener parade")

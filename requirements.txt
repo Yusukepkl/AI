@@ -1,0 +1,36 @@
+# -- requirements.txt
+# Dependências de build e compatibilidade
+setuptools>=70.3.0,<70.4.0  # Rasa requires this range
+packaging>=20.0,<21.0     # Rasa compatibility
+Cython>=0.29.30           # Para compilar extensões Cython
+
+# ASR e áudio
+pvporcupine
+webrtcvad
+pyaudio
+vosk
+whispercpp
+pyttsx3
+simpleaudio
+
+# NLP e APIs
+openai
+googletrans
+sqlalchemy
+pyyaml>=6.0.2           # Forçar versão com wheel
+requests
+rasa
+
+# Mensageria
+kafka-python
+paho-mqtt
+
+# UI
+PySide6
+
+# Telemetria
+opentelemetry-api
+opentelemetry-sdk
+
+# Numpy
+numpy>=1.22,<1.24        # Compatível com TensorFlow 2.12 e SciPy
