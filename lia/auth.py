@@ -1,4 +1,4 @@
-from config import config
+from lia.config import config
 
 
 def validate(token: str) -> bool:

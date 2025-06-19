@@ -1,6 +1,6 @@
 from kafka import KafkaProducer, KafkaConsumer
-from config import config
-from logger import logger
+from lia.config import config
+from lia.logger import logger
 import threading
 
 producer = KafkaProducer(bootstrap_servers=[config.KAFKA_BROKER], value_serializer=lambda v: v)

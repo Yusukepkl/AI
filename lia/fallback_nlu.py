@@ -1,6 +1,6 @@
 import requests
-from config import config
-from logger import logger
+from lia.config import config
+from lia.logger import logger
 from typing import Dict, List
 
 RASA_URL = config.RASA_URL

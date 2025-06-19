@@ -1,7 +1,7 @@
 # mqtt_iot.py
 import paho.mqtt.client as mqtt
-from config import config
-from logger import logger
+from lia.config import config
+from lia.logger import logger
 
 # Renomeia variável para evitar shadowing
 mqtt_client = mqtt.Client()

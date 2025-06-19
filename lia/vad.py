@@ -1,6 +1,6 @@
 # -- vad.py
 import webrtcvad
-from logger import logger
+from lia.logger import logger
 
 
 def init_vad(mode: int = 1) -> webrtcvad.Vad:

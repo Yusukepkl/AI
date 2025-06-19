@@ -2,11 +2,11 @@
 import queue
 import threading
 from PySide6.QtWidgets import QApplication
-from interface import MainWindow
-from hotword import listen_hotwired
-from asr import transcribe
-from nlu_tts import process_loop
-from kafka_pipeline import start_kafka_consumer
+from lia.interface import MainWindow
+from lia.hotword import listen_hotwired
+from lia.asr import transcribe
+from lia.nlu_tts import process_loop
+from lia.kafka_pipeline import start_kafka_consumer
 
 if __name__ == "__main__":
     # Filas de comunicação

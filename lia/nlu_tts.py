@@ -1,19 +1,21 @@
 # nlu_tts.py
 import openai
 import pyttsx3
-from config import config
-from logger import logger, tracer
-from context import save_message, get_history, save_memory, summarize_history
-from translation import translate
-from fallback_nlu import interpret, handle
-from dialog_manager import DialogManager
-from plugins.loader import load_plugins
+from pathlib import Path
+from lia.config import config
+from lia.logger import logger, tracer
+from lia.context import save_message, get_history, save_memory, summarize_history
+from lia.translation import translate
+from lia.fallback_nlu import interpret, handle
+from lia.dialog_manager import DialogManager
+from lia.plugins.loader import load_plugins
 
 # Configura OpenAI API key
 openai.api_key = config.OPENAI_API_KEY
 
-# Carrega plugins dinamicamente da pasta 'plugins'
-plugins = load_plugins("plugins")
+# Carrega plugins dinamicamente a partir do diretório 'plugins'
+PLUGIN_DIR = Path(__file__).resolve().parent / "plugins"
+plugins = load_plugins(str(PLUGIN_DIR))
 
 # Mapeamento de emoções por palavras-chave
 KEYWORD_EMOTIONS = {

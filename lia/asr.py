@@ -3,8 +3,8 @@ import os
 from vosk import Model, KaldiRecognizer
 import json
 import numpy as np
-from config import config
-from logger import logger
+from lia.config import config
+from lia.logger import logger
 
 # 1) Verifier pasta do modelo Vosk
 if not os.path.isdir(config.VOSK_MODEL_PATH):

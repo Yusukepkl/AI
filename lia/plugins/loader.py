@@ -1,6 +1,6 @@
 import os
 import importlib.util
-from logger import logger
+from lia.logger import logger
 
 
 def load_plugins(plugin_folder: str):
