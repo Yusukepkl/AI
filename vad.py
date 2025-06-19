@@ -2,17 +2,19 @@
 import webrtcvad
 from logger import logger
 
+
 def init_vad(mode: int = 1) -> webrtcvad.Vad:
     """
     Inicializa o VAD com o modo especificado (0-3).
     """
     vad = webrtcvad.Vad(mode)
-    logger.info(f'VAD initialized with mode {mode}')
+    logger.info(f"VAD initialized with mode {mode}")
     return vad
 
 
-def vad_collector(vad: webrtcvad.Vad, frames: list[bytes], sample_rate: int = 16000,
-                  frame_ms: int = 30, padding_ms: int = 300):
+def vad_collector(
+    vad: webrtcvad.Vad, frames: list[bytes], sample_rate: int = 16000, frame_ms: int = 30, padding_ms: int = 300
+):
     """
     Gera segmentos de áudio voz a partir de uma lista de frames brutos.
 
@@ -51,12 +53,12 @@ def vad_collector(vad: webrtcvad.Vad, frames: list[bytes], sample_rate: int = 16
             voiced_frames.append(frame)
             ring_buffer.append(frame)
             if sum(not vad.is_speech(f, sample_rate) for f in ring_buffer) > num_padding:
-                logger.debug('Yielding VAD segment')
-                yield b''.join(voiced_frames)
+                logger.debug("Yielding VAD segment")
+                yield b"".join(voiced_frames)
                 ring_buffer.clear()
                 voiced_frames.clear()
                 triggered = False
 
     # Se ainda restarem frames de voz ao final, retorna
     if voiced_frames:
-        yield b''.join(voiced_frames)
+        yield b"".join(voiced_frames)

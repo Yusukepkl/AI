@@ -20,15 +20,17 @@ t = np.linspace(0, dur, int(sr * dur), False)
 wave = 0.5 * np.sin(2 * np.pi * 1000 * t)
 audio_beep = (wave * (2**15 - 1) / np.max(np.abs(wave))).astype(np.int16)
 
+
 def play_beep():
     sa.play_buffer(audio_beep, 1, 2, sr)
 
+
 # Carrel parametrise do Porcupine via config.yaml ou variates de ambient
-ACCESS_KEY    = os.getenv('PV_ACCESS_KEY', config.PV_ACCESS_KEY)
-LIBRARY_PATH  = os.getenv('PV_LIBRARY_PATH', config.PV_LIBRARY_PATH)
-MODEL_PATH    = os.getenv('PV_MODEL_PATH', config.PV_MODEL_PATH)
-KEYWORD_PATH  = os.getenv('PV_KEYWORD_PATH', config.PV_KEYWORD_PATH)
-SENSITIVITIES = [float(os.getenv('PV_SENSITIVITY', config.PV_SENSITIVITY))]
+ACCESS_KEY = os.getenv("PV_ACCESS_KEY", config.PV_ACCESS_KEY)
+LIBRARY_PATH = os.getenv("PV_LIBRARY_PATH", config.PV_LIBRARY_PATH)
+MODEL_PATH = os.getenv("PV_MODEL_PATH", config.PV_MODEL_PATH)
+KEYWORD_PATH = os.getenv("PV_KEYWORD_PATH", config.PV_KEYWORD_PATH)
+SENSITIVITIES = [float(os.getenv("PV_SENSITIVITY", config.PV_SENSITIVITY))]
 # Instancia o detector de hot-word. Caso KEYWORD_PATH não esteja
 # definido, utiliza o modelo padrão "porcupine" embutido na biblioteca.
 if KEYWORD_PATH:
@@ -37,29 +39,24 @@ if KEYWORD_PATH:
         library_path=LIBRARY_PATH,
         model_path=MODEL_PATH,
         keyword_paths=[KEYWORD_PATH],
-        sensitivities=SENSITIVITIES
+        sensitivities=SENSITIVITIES,
     )
 else:
-    logger.warning(
-        "PV_KEYWORD_PATH não definido; usando palavra-chave padrão 'porcupine'."
-    )
+    logger.warning("PV_KEYWORD_PATH não definido; usando palavra-chave padrão 'porcupine'.")
     porcupine = create(
         access_key=ACCESS_KEY,
         library_path=LIBRARY_PATH or None,
         model_path=MODEL_PATH or None,
         keywords=["porcupine"],
-        sensitivities=SENSITIVITIES
+        sensitivities=SENSITIVITIES,
     )
 
 # Setup de áudio
 pa = pyaudio.PyAudio()
 stream = pa.open(
-    rate=porcupine.sample_rate,
-    channels=1,
-    format=pyaudio.paInt16,
-    input=True,
-    frames_per_buffer=porcupine.frame_length
+    rate=porcupine.sample_rate, channels=1, format=pyaudio.paInt16, input=True, frames_per_buffer=porcupine.frame_length
 )
+
 
 def listen_hotwired(cmd_q, audio_q, vis_callback=None):
     """

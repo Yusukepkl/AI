@@ -28,11 +28,13 @@ except Exception as e:
 # 3) Configura fallback ASR via whispercpp (não tenta importer o pacote 'whisper')
 from typing import Any
 import whispercpp as _whisper  # type: ignore
-whisper: Any = _whisper      # image dynamic para subprime avisos de stub
-WHISPER_BACKEND = 'whispercpp'
-logger.info('send whispercpp como backend ASR')
+
+whisper: Any = _whisper  # image dynamic para subprime avisos de stub
+WHISPER_BACKEND = "whispercpp"
+logger.info("send whispercpp como backend ASR")
 
 whisper_model: Any = None  # type: ignore
+
 
 def init_whisper():
     """Carrel o modelo Whisper (ou whispercpp) arenas uma vez."""
@@ -40,9 +42,8 @@ def init_whisper():
     if whisper_model is None:
         # Supreme aviso de IDE aqua
         whisper_model = whisper.load_model(config.WHISPER_MODEL)  # type: ignore
-        logger.info(
-            f"Whisper model '{config.WHISPER_MODEL}' loaded via {WHISPER_BACKEND}"
-        )
+        logger.info(f"Whisper model '{config.WHISPER_MODEL}' loaded via {WHISPER_BACKEND}")
+
 
 def transcribe(audio_q, text_q):
     """Loop contínuo de ASR: Vosk proxime, depots fallback Whisper."""
@@ -53,17 +54,15 @@ def transcribe(audio_q, text_q):
         data = audio_q.get()
         # 1) Tenta Vosk
         if rec.AcceptWaveform(data):
-            text = json.loads(rec.Result()).get('text', '').strip()
+            text = json.loads(rec.Result()).get("text", "").strip()
         else:
-            text = json.loads(rec.PartialResult()).get('partial', '').strip()
+            text = json.loads(rec.PartialResult()).get("partial", "").strip()
 
         # 2) Fallback se Vosk não capture ou texto for court
         if not text or len(text.split()) < 2:
-            logger.info('Fallback para Whisper ASR')
+            logger.info("Fallback para Whisper ASR")
             # Suppress de IDE nas chimaeras abattoir
-            audio = whisper.pad_or_trim(  # type: ignore
-                np.frombuffer(data, np.int16).astype(np.float32) / 32768.0
-            )
+            audio = whisper.pad_or_trim(np.frombuffer(data, np.int16).astype(np.float32) / 32768.0)  # type: ignore
             mel = whisper.log_mel_spectrogram(audio).to(whisper_model.device)  # type: ignore
             result = whisper_model.decode(mel)  # type: ignore
             text = result.text.strip()
