@@ -13,7 +13,14 @@ Este repositório reúne diversos módulos que juntos implementam a **Lia**, uma
 
 ## Instalação
 
-Instale os pacotes do projeto com:
+Antes de instalar as dependências Python, é necessário obter as bibliotecas nativas usadas por
+`pyaudio` e `simpleaudio`:
+
+```bash
+sudo apt-get install portaudio19-dev libasound2-dev
+```
+
+Em seguida, instale os pacotes do projeto com:
 
 ```bash
 pip install -r requirements.txt
