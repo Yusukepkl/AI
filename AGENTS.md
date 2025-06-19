@@ -3,7 +3,7 @@
 Todas as instruções a seguir se aplicam a todo o repositório.
 
 - Utilize **Python 3.11**.
-- Antes de commitar rode os seguintes passos:
+- Antes de commitar rode os seguintes passos (após executar `./setup.sh` para instalar bibliotecas nativas):
 
 ```bash
 pip install -r requirements.txt

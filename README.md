@@ -10,6 +10,13 @@ Este repositório reúne diversos módulos que juntos implementam a **Lia**, uma
   ```bash
   sudo apt-get install portaudio19-dev libasound2-dev
   ```
+- Principais bibliotecas Python:
+  pvporcupine, webrtcvad, pyaudio, vosk,
+  whispercpp, pyttsx3, simpleaudio, openai,
+  googletrans, sqlalchemy, pyyaml, requests,
+  kafka-python, paho-mqtt, PySide6,
+  opentelemetry-api, opentelemetry-sdk,
+  numpy
 
 ## Instalação
 
@@ -51,7 +58,20 @@ pv_library_path: ""
 pv_model_path: ""
 pv_keyword_path: ""
 pv_sensitivity: 0.5
+audio_input_device: null
 ```
+
+Use `audio_input_device` para especificar o índice do microfone quando existir
+mais de um dispositivo conectado. Para descobrir os índices disponíveis:
+
+```bash
+python - <<'EOF'
+import pyaudio, json
+pa = pyaudio.PyAudio()
+print(json.dumps({i: pa.get_device_info_by_index(i)["name"] for i in range(pa.get_device_count())}, indent=2))
+EOF
+```
+Também é possível definir o dispositivo via variável de ambiente `AUDIO_INPUT_DEVICE`.
 
 Para usar a detecção de hot-word Porcupine, obtenha uma chave gratuita em
 [console.picovoice.ai](https://console.picovoice.ai/) e defina `pv_access_key`

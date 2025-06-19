@@ -58,11 +58,20 @@ else:
         sensitivities=SENSITIVITIES,
     )
 
-# Setup de áudio
-pa = pyaudio.PyAudio()
-stream = pa.open(
-    rate=porcupine.sample_rate, channels=1, format=pyaudio.paInt16, input=True, frames_per_buffer=porcupine.frame_length
-)
+
+def _open_audio_stream() -> tuple[pyaudio.PyAudio, pyaudio.Stream]:
+    pa = pyaudio.PyAudio()
+    kwargs = {
+        "rate": porcupine.sample_rate,
+        "channels": 1,
+        "format": pyaudio.paInt16,
+        "input": True,
+        "frames_per_buffer": porcupine.frame_length,
+    }
+    if config.AUDIO_INPUT_DEVICE is not None:
+        kwargs["input_device_index"] = int(config.AUDIO_INPUT_DEVICE)
+    stream = pa.open(**kwargs)
+    return pa, stream
 
 
 def listen_hotwired(cmd_q, audio_q, vis_callback=None):
@@ -71,7 +80,8 @@ def listen_hotwired(cmd_q, audio_q, vis_callback=None):
     e envia o áudio capture para VAD → ASR.
     """
     vad = init_vad(config.VAD_MODE)
-    logger.info("Hot-word listener clinician")
+    logger.info("Hot-word listener iniciado")
+    pa, stream = _open_audio_stream()
     try:
         while True:
             pcm = stream.read(porcupine.frame_length, exception_on_overflow=False)
@@ -99,4 +109,4 @@ def listen_hotwired(cmd_q, audio_q, vis_callback=None):
         stream.close()
         pa.terminate()
         porcupine.delete()
-        logger.info("Hot-word listener parade")
+        logger.info("Hot-word listener parado")
