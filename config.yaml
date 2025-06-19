@@ -18,3 +18,4 @@ pv_library_path: ""
 pv_model_path: ""
 pv_keyword_path: ""
 pv_sensitivity: 0.5
+audio_input_device: null

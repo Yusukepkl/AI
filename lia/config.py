@@ -39,6 +39,8 @@ class Config:
         self.PV_MODEL_PATH = os.getenv("PV_MODEL_PATH", data.get("pv_model_path", ""))
         self.PV_KEYWORD_PATH = os.getenv("PV_KEYWORD_PATH", data.get("pv_keyword_path", ""))
         self.PV_SENSITIVITY = float(os.getenv("PV_SENSITIVITY", data.get("pv_sensitivity", 0.5)))
+        device_env = os.getenv("AUDIO_INPUT_DEVICE")
+        self.AUDIO_INPUT_DEVICE = int(device_env) if device_env is not None else data.get("audio_input_device")
 
 
 # instantiate
