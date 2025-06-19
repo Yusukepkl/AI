@@ -9,9 +9,9 @@ import numpy as np
 
 # Porcupine para hot-word
 try:
-    from pvporcupine import Porcupine
+    from pvporcupine import Porcupine, create
 except ImportError:
-    raise ImportError("pvporcupine não installation. Rode `pip install pvporcupine`.")
+    raise ImportError("pvporcupine não instalado. Rode `pip install pvporcupine`.")
 
 # Gera um beep de confirmation
 sr = 44100
@@ -29,21 +29,27 @@ LIBRARY_PATH  = os.getenv('PV_LIBRARY_PATH', config.PV_LIBRARY_PATH)
 MODEL_PATH    = os.getenv('PV_MODEL_PATH', config.PV_MODEL_PATH)
 KEYWORD_PATH  = os.getenv('PV_KEYWORD_PATH', config.PV_KEYWORD_PATH)
 SENSITIVITIES = [float(os.getenv('PV_SENSITIVITY', config.PV_SENSITIVITY))]
-
-if not KEYWORD_PATH:
-    raise ValueError(
-        "Porcupine keyword_path não configuration. "
-        "Define PV_KEYWORD_PATH no ambient ou no config.yaml."
+# Instancia o detector de hot-word. Caso KEYWORD_PATH não esteja
+# definido, utiliza o modelo padrão "porcupine" embutido na biblioteca.
+if KEYWORD_PATH:
+    porcupine = Porcupine(
+        access_key=ACCESS_KEY,
+        library_path=LIBRARY_PATH,
+        model_path=MODEL_PATH,
+        keyword_paths=[KEYWORD_PATH],
+        sensitivities=SENSITIVITIES
     )
-
-# Instance o detector de hot-word
-porcupine = Porcupine(
-    access_key=ACCESS_KEY,
-    library_path=LIBRARY_PATH,
-    model_path=MODEL_PATH,
-    keyword_paths=[KEYWORD_PATH],
-    sensitivities=SENSITIVITIES
-)
+else:
+    logger.warning(
+        "PV_KEYWORD_PATH não definido; usando palavra-chave padrão 'porcupine'."
+    )
+    porcupine = create(
+        access_key=ACCESS_KEY,
+        library_path=LIBRARY_PATH or None,
+        model_path=MODEL_PATH or None,
+        keywords=["porcupine"],
+        sensitivities=SENSITIVITIES
+    )
 
 # Setup de áudio
 pa = pyaudio.PyAudio()
