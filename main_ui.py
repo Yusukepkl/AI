@@ -1,4 +1,4 @@
-﻿import sys
+import sys
 import queue
 import threading
 from PySide6.QtWidgets import QApplication
