@@ -26,6 +26,9 @@ Em seguida, instale os pacotes do projeto com:
 pip install -r requirements.txt
 ```
 
+Se preferir, execute `./setup.sh` para instalar automaticamente as dependências
+nativas e os pacotes Python.
+
 ## Configuração
 
 Todas as opções de execução são lidas de `config.yaml`. Um exemplo é mostrado abaixo:
