@@ -1,0 +1,15 @@
+openai_api_key: ""
+vad_mode: 1
+kafka_broker: "localhost:9092"
+db_url: "sqlite:///lia_context.db"
+ws_host: "0.0.0.0"
+ws_port: 8765
+auth_token: "token123"
+languages:
+  - pt
+  - en
+  - es
+mqtt_broker: "localhost"
+vosk_model_path: "models/vosk-model-small"
+whisper_model: "small"
+rasa_url: "http://localhost:5005/model/parse"
